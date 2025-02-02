@@ -1,0 +1,33 @@
+@use "./typography.scss" as *;
+@use "./primitives.scss" as *;
+@use "./spacing.scss" as *;
+@use "./radius.scss" as *;
+@use "./colours.scss" as *;
+
+@mixin button {
+  line-height: $line-height-tiny;
+  font-family: $font-family-primary;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-base;
+  // letter-spacing: $letter-spacing;
+  color: $invert-text-color;
+  background-color: $neutral-1000;
+  padding: $spacing-7;
+  border-radius: $border-radius-medium;
+
+  &:hover {
+    background-color: $black-80;
+  }
+  &:active {
+    background-color: $black-60;
+  }
+
+  &:disabled {
+    background-color: $black-10;
+    color: $black-30;
+  }
+
+  &:focus {
+    outline: 1px solid blue($color: #000000);
+  }
+}

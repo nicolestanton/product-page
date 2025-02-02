@@ -1,95 +1,94 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import { SubscriptionSection } from "./Components/Subscription/Subscription";
+import { Carousel } from "./Components/Carousel/Carousel";
+import styles from "./page.module.scss";
+import { ProductInfo } from "./Components/ProductInfo/ProductInfo";
+import { useState } from "react";
+import product from "./ProductInfo";
+import { calculateSubscriptionPrice } from "./helpers";
+import { Button } from "./Components/Button/Button";
+import { Dropdown } from "./Components/Dropdown/Dropdown";
 
-export default function Home() {
+export const Home = () => {
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [subscription, setSubscription] = useState<boolean>(true);
+
+  const handleSubscriptionChange = () => {
+    setSubscription(!subscription);
+    console.log(subscription);
+  };
+
+  const options = [
+    { value: "1", label: "1" },
+    { value: "2", label: "2" },
+    { value: "3", label: "3" },
+    { value: "4", label: "4" },
+  ];
   return (
-    <div className={styles.page}>
+    <div className={styles.container}>
       <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+        {/* TODO: Add properrouting in next js to create correct breadcrumb */}
+        <div className={styles.breadcrumbs}>
+          Shop all &#62; Dry Dog Food &#62;{" "}
+          <span className={styles.current}>Health & Digestion Dry Food</span>
+        </div>
+        {/* TODO: do we need this paye layout classnames*/}
+        <div className={styles.pageLayout}>
+          <Carousel images={product.images} title={product.title} />
+          <div className={styles.productDetails}>
+            <ProductInfo
+              title={product.title}
+              price={product.price}
+              points={
+                subscription
+                  ? product.subscriptionPoints
+                  : product.regularPoints
+              }
+              currency={product.currency}
+              subscription={subscription}
+              subscriptionPrice={parseFloat(
+                calculateSubscriptionPrice(
+                  product.price,
+                  product.subscriptionSaving
+                )
+              )}
             />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+            <Dropdown
+              label="Quantity"
+              options={options}
+              value={selectedQuantity}
+              onChange={(value) => setSelectedQuantity(Number(value))}
+              placeholder={selectedQuantity.toString()}
+            />
+
+            <SubscriptionSection
+              onSubscriptionChange={handleSubscriptionChange}
+              saving={product.subscriptionSaving}
+            />
+            <div className={styles.productDescription}>
+              <p className={styles.description}>{product.description}</p>
+              <ul className={styles.keyFeatures}>
+                {product.keyFeatures.map((feature: string, index: number) => {
+                  return (
+                    <li className={styles.feature} key={index}>
+                      {feature}
+                    </li>
+                  );
+                })}
+              </ul>
+              <div className={styles.buttonWrapper}>
+                <Button
+                  handleOnClick={() => console.log("clicked")}
+                  label="Add to Basket"
+                  variant="primary"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
-}
+};
+
+export default Home;

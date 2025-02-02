@@ -1,0 +1,98 @@
+$font-family-primary: "Poppins", sans-serif;
+
+$font-weight-light: 300;
+$font-weight-regular: 500;
+$font-weight-bold: 700;
+
+$line-height-micro: 14px;
+$line-height-tiny: 16px;
+$line-height-xs: 24px;
+$line-height-sm: 26px;
+$line-height-md: 28px;
+$line-height-lg: 32px;
+$line-height-xl: 38px;
+$line-height-xxl: 48px;
+
+$primary-letter-spacing: 0px;
+
+$font-size-tiny: 10px;
+$font-size-base: 16px;
+$font-size-md: 18px;
+$font-size-lg: 22px;
+$font-size-xl: 26px;
+$font-size-xxl: 32px;
+$font-size-xxxl: 38px;
+
+
+
+@mixin display {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-xxxl;
+  line-height: $line-height-xxl;
+  letter-spacing: $primary-letter-spacing;
+}
+
+@mixin h1 {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-xxl;
+  line-height: $line-height-xl;
+  letter-spacing: $primary-letter-spacing;
+}
+
+@mixin h2 {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-xl;
+  line-height: $line-height-lg;
+  letter-spacing: $primary-letter-spacing;
+}
+
+@mixin h3 {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-lg;
+  line-height: $line-height-md;
+  letter-spacing: $primary-letter-spacing;
+}
+
+@mixin s1{
+  font-family: $font-family-primary;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-md;
+  line-height: $line-height-sm;
+  letter-spacing: $primary-letter-spacing;
+}
+
+@mixin s2 {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-base;
+  line-height: $line-height-xs;
+  letter-spacing: $primary-letter-spacing;
+}
+
+@mixin p1 {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-light;
+  font-size: $font-size-md;
+  line-height: $line-height-sm;
+  letter-spacing: $primary-letter-spacing;
+}
+
+@mixin p2 {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-light;
+  font-size: $font-size-base;
+  line-height: $line-height-xs;
+  letter-spacing: $primary-letter-spacing;
+}
+
+@mixin c1 {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-light;
+  font-size: $font-size-tiny;
+  line-height: $line-height-micro;
+  letter-spacing: $primary-letter-spacing;
+}

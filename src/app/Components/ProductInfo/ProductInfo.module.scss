@@ -1,0 +1,40 @@
+@use "../../styles/tokens/typography.scss" as *;
+@use "../../styles/tokens/colours.scss" as *;
+@use "../../styles/tokens/spacing.scss" as *;
+
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+.fullPrice {
+  text-decoration: line-through;
+  color: #000000;
+  @include p1;
+}
+
+.title {
+  @include h2;
+  margin: 0;
+}
+
+.priceContainer {
+  display: flex;
+  gap: $spacing-3;
+  align-items: baseline;
+}
+
+.subscriptionPrice {
+  color: $brand-text-color;
+}
+
+.price,
+.subscriptionPrice {
+  @include h3;
+}
+
+.points {
+  @include s2;
+  color: $brand-text-color;
+}

@@ -1,0 +1,101 @@
+@use "../../styles/tokens/colours.scss" as *;
+@use "../../styles/tokens/typography.scss" as *;
+
+.header {
+  padding: 8px 16px;
+  border-bottom: 1px solid $minimal-border-color;
+}
+
+.nav {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menuItems {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menuItem {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.menuButton {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.mobileMenu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .menuItems {
+    display: none;
+  }
+
+  .desktopMenuIcons{
+    display: none;
+  }
+
+  .menuButton {
+    display: block;
+    z-index: 1000;
+  }
+
+  .mobileMenu {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    padding: 2rem;
+  }
+
+  .mobileMenu.open {
+    transform: translateX(0);
+  }
+
+  .mobileMenuItems {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0;
+  }
+
+  .mobileMenuItem {
+    margin: 16px 0;
+    font-size: 1.2rem;
+  }
+
+}
+
+@media (min-width: 769px){
+  .menuItem{
+    @include p2;
+  }
+
+  .headerIcons{
+    display: flex;
+    gap: 16px;
+  }
+
+  .desktopMenuIcons{
+    display: flex;
+    gap: 16px;
+  } 
+}

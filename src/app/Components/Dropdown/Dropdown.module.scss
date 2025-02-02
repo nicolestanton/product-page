@@ -1,0 +1,72 @@
+@use "../../styles/tokens/typography" as *;
+@use "../../styles/tokens/colours" as *;
+@use "../../styles/tokens/radius" as *;
+@use "../../styles/tokens/spacing" as *;
+
+.label {
+  @include p2;
+  margin-bottom: $spacing-2;
+  font-weight: $font-weight-regular;
+}
+
+.dropdownContainer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.dropdownButton {
+  @include p2;
+  width: 100%;
+  padding: $spacing-6;
+  background: $primary-surface-color;
+  border: 1px solid $primary-border-color;
+  border-radius: $border-radius-medium;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdownButton:hover {
+  border-color: $primary-border-color;
+}
+
+.dropdownButton:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+
+.optionsList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: $spacing-2;
+  padding: $spacing-2 0;
+  background: $primary-surface-color;
+  border: 1px solid $secondary-border-color;
+  border-radius: $border-radius-small;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.option {
+  @include p2;
+  padding: $spacing-4 $spacing-5;
+  cursor: pointer;
+  color: $primary-text-color;
+}
+
+.option:hover {
+  background: #f5f5f5;
+}
+
+.selected {
+  background: #e6f0ff;
+}

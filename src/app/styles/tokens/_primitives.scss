@@ -1,0 +1,56 @@
+@use "sass:color";
+
+@function tint($color, $percentage) {
+    @return color.mix(white, $color, $percentage);
+  }
+
+
+
+//neutrals
+$neutral-0: #ffffff;
+$neutral-50: #f2f2f2;
+$neutral-100: #e5e5e5;
+$neutral-150: #d8d8d8;
+$neutral-200: #cccccc;
+$neutral-300: #b2b2b2;
+$neutral-400: #999999;
+$neutral-500: #808080;
+$neutral-600: #666666;
+$neutral-700: #4c4c4c;
+$neutral-800: #333333;
+$neutral-900: #191919;
+$neutral-1000: #000000;
+
+//purples
+$purple-50: #fbf4fb;
+$purple-100: #f1dcf1;
+$purple-200: #eacbeb;
+$purple-300: #e1b3e2;
+$purple-400: #dba5dc;
+$purple-500: #d28ed3;
+$purple-600: #bf81c0;
+$purple-700: #956596;
+$purple-800: #744e74;
+$purple-900: #583c59;
+
+//creams
+$cream-50: #fffcf6;
+$cream-100: #fff8ed;
+$cream-200: #f5efe3;
+$cream-300: #ebe5d9;
+$cream-400: #ebe5d9;
+$cream-500: #d6d1c6;
+$cream-600: #ccc7bd;
+$cream-700: #b8b3aa;
+$cream-800: #bbb3aa;
+$cream-900: #ada9a1;
+
+$black-15: tint($neutral-1000, 85%);
+$black-30: tint($neutral-1000, 70%);
+$black-60: tint($neutral-1000, 40%);
+$black-80: tint($neutral-1000, 20%);
+$black-90: tint($neutral-1000, 10%);
+$black-10: tint($neutral-1000, 90%);
+$black-6: tint($neutral-1000, 94%);
+
+
