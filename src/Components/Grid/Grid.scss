@@ -1,0 +1,80 @@
+$max-container-width: 1680px !default;
+$gutter-width: 8px !default;
+$flex-grid-columns: 12;
+
+$breakpoints-list: (
+  xsmall: (
+    min-width: 544px,
+  ),
+  small: (
+    min-width: 768px,
+  ),
+  medium: (
+    min-width: 990px,
+  ),
+  large: (
+    min-width: $max-container-width,
+  ),
+) !default;
+
+@function get-device-width($size) {
+  @return map-get($breakpoints-list, $size);
+}
+
+@mixin breakpoint($size) {
+  $device-width: get-device-width($size);
+  $pixel-value: map-get($device-width, min-width);
+
+  @media (min-width: $pixel-value) {
+    @content;
+  }
+}
+
+@function calc-flex-item-width($total-number-of-columns, $column-number) {
+  $base-width: 100% / $total-number-of-columns;
+  $column-width: $base-width * $column-number;
+
+  @return $column-width;
+}
+
+.flexContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  flex-grow: 1;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.flexContainer--no-gutters {
+  > .flexItem {
+    padding: 0 !important;
+  }
+}
+
+.flexItem {
+  padding: $gutter-width / 2;
+
+  @for $i from 1 through $flex-grid-columns {
+    &--#{$i} {
+      width: calc-flex-item-width($flex-grid-columns, $i);
+    }
+  }
+
+  @each $breakpointName, $breakpointValue in $breakpoints-list {
+    @for $i from 1 through $flex-grid-columns {
+      &--Xsmall-#{$i},
+      &--Small-#{$i}, 
+      &--Medium-#{$i},
+      &--Large-#{$i} {
+        @include breakpoint($breakpointName) {
+          @if $i > ($flex-grid-columns / 2) {
+            width: 50%;
+          } @else {
+            width: calc-flex-item-width($flex-grid-columns, $i);
+          }
+        }
+      }
+    }
+  }
+}

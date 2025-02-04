@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     disableStaticImages: false,
   },
   sassOptions: {
-    includePaths: ['./src/app/styles'],
+    includePaths: ['./src/styles'],
   },
 };
 

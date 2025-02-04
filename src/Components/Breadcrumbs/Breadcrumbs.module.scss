@@ -1,0 +1,11 @@
+@use "../../styles/tokens/typography.scss" as *;
+@use "../../styles/tokens/colours.scss" as *;
+
+.crumb {
+  @include c1;
+  color: $minimal-text-color;
+}
+
+.crumb:last-of-type {
+  color: black;
+}
