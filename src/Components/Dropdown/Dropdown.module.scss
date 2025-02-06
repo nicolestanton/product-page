@@ -2,11 +2,17 @@
 @use "../../styles/tokens/colours" as *;
 @use "../../styles/tokens/radius" as *;
 @use "../../styles/tokens/spacing" as *;
+@use "../../styles/tokens/primitives" as *;
+
 
 .label {
   @include p2;
   margin-bottom: $spacing-2;
   font-weight: $font-weight-regular;
+}
+
+.labelDisabled {
+  color: $disabled-text-color;
 }
 
 .dropdownContainer {
@@ -30,15 +36,31 @@
   align-items: center;
 }
 
+.focused {
+  background-color: rgba(0, 0, 0, 0.1);
+  outline: 2px solid $focus-border-color;
+}
+
 .dropdownButton:hover {
   border-color: $primary-border-color;
 }
 
 .dropdownButton:focus {
   outline: none;
-  border-color: #0066cc;
+  border-color: $focus-border-color;
   box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
 }
+
+.dropdownDisabled {
+  background: $disabled-surface-color;
+  color: $black-30;
+  border: 1px solid $minimal-border-color;
+}
+
+.dropdownDisabled img {
+  opacity: 0.3;
+}
+
 
 .optionsList {
   position: absolute;

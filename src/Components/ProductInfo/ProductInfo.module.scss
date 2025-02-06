@@ -10,7 +10,7 @@
 
 .fullPrice {
   text-decoration: line-through;
-  color: #000000;
+  color: $primary-text-color;
   @include p1;
 }
 

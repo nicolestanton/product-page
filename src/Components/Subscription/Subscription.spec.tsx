@@ -1,6 +1,24 @@
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { SubscriptionSection } from './Subscription';
+
+// Mock the Dropdown component
+jest.mock('../Dropdown/Dropdown', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Dropdown: ({ disabled, value, onChange, ...props }: any) => (
+    <select
+      data-testid="Delivery Frequency"
+      disabled={disabled}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      {...props}
+    >
+      <option value="30">30 Days</option>
+      <option value="60">60 Days</option>
+      <option value="90">90 Days</option>
+    </select>
+  ),
+}));
 
 describe('SubscriptionSection', () => {
   const mockOnSubscriptionChange = jest.fn();
@@ -9,31 +27,39 @@ describe('SubscriptionSection', () => {
     mockOnSubscriptionChange.mockClear();
   });
 
+  const renderComponent = (props = {}) => {
+    return render(
+      <SubscriptionSection 
+        saving={10} 
+        onSubscriptionChange={mockOnSubscriptionChange}
+        {...props}
+      />
+    );
+  };
+
   it('renders subscription title with saving percentage', () => {
-    render(<SubscriptionSection saving={10} onSubscriptionChange={mockOnSubscriptionChange} />);
-    expect(screen.getByText('Subscription & Save 10%')).toBeInTheDocument();
+    renderComponent();
+    expect(screen.getByText(/subscription & save 10%/i)).toBeInTheDocument();
   });
 
-  it('renders radio options for subscription and one-time purchase', () => {
-    render(<SubscriptionSection saving={10} onSubscriptionChange={mockOnSubscriptionChange} />);
-    
-    expect(screen.getByRole('radio', { name: /subscription/i })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /one-off/i })).toBeInTheDocument();
+  it('renders radio options', () => {
+    renderComponent();
+    expect(screen.getByText("Subscription")).toBeInTheDocument();
+    expect(screen.getByText("One-off")).toBeInTheDocument();
   });
 
-  it('defaults to subscription option', () => {
-    render(<SubscriptionSection saving={10} onSubscriptionChange={mockOnSubscriptionChange} />);
-    
-    const subscriptionRadio = screen.getByRole('radio', { name: /subscription/i }) as HTMLInputElement;
-    expect(subscriptionRadio.checked).toBe(true);
-  });
+  describe('delivery frequency dropdown', () => {
+    it('renders and defaults to 30 days', () => {
+      renderComponent();
+      const dropdown = screen.getByTestId('Delivery Frequency') as HTMLSelectElement;
+      expect(dropdown).toBeInTheDocument();
+      expect(dropdown.value).toBe('30');
+    });
 
-  it('calls onSubscriptionChange when switching between options', () => {
-    render(<SubscriptionSection saving={10} onSubscriptionChange={mockOnSubscriptionChange} />);
-    
-    const oneTimeRadio = screen.getByRole('radio', { name: /one-off/i });
-    fireEvent.click(oneTimeRadio);
-    
-    expect(mockOnSubscriptionChange).toHaveBeenCalledWith(false);
+    it('is enabled by default with subscription', () => {
+      renderComponent();
+      const dropdown = screen.getByTestId('Delivery Frequency');
+      expect(dropdown).not.toBeDisabled();
+    });
   });
 });

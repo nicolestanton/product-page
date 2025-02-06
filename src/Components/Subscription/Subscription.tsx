@@ -29,9 +29,9 @@ export const SubscriptionSection = ({
   ];
 
   const deliveryFrequencyOptions = [
-    { label: "30days", value: "30" },
-    { label: "60days", value: "60" },
-    { label: "90days", value: "90" },
+    { label: "30 Days", value: "30" },
+    { label: "60 Days", value: "60" },
+    { label: "90 Days", value: "90" },
   ];
 
   return (
@@ -60,12 +60,13 @@ export const SubscriptionSection = ({
           data-testid="Delivery Frequency"
           disabled={purchaseType === "one-time"}
           label="Delivery Frequency"
+          id="delivery-frequency"
           options={deliveryFrequencyOptions}
           value={selectedFrequency}
           onChange={(value: string | number) =>
             setSelectedFrequency(String(value))
           }
-          placeholder={selectedFrequency.toString()}
+          placeholder={selectedFrequency}
         />
       </div>
     </section>

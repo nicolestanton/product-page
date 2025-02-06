@@ -120,7 +120,6 @@ export const Carousel = ({ images, title }: CarouselProps) => {
           alt={`${title} - View ${currentImage + 1} of ${images.length}`}
           className={styles.image}
           fill
-          sizes="(max-width: 768px) 100vw, 800px"
           priority
         />
       </div>
@@ -151,7 +150,6 @@ export const Carousel = ({ images, title }: CarouselProps) => {
                 alt="" 
                 className={styles.thumbnailImage} 
                 fill
-                sizes="(max-width: 768px) 100vw, 80px"
               />
             </button>
           ))}

@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "./Dropdown.module.scss";
 import Image from "next/image";
 import ChevronDown from "../../assets/Icons/icons-chevron.png";
+import clsx from "clsx";
+
 export interface DropdownOption {
   value: string;
   label: string;
@@ -29,9 +31,13 @@ export const Dropdown: React.FC<DropdownProps> = ({
   className = "",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
 
   const selectedOption = options.find((option) => option.value === value);
+  const listId = `${id}-listbox`;
+  const labelId = `${id}-label`;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -47,60 +53,126 @@ export const Dropdown: React.FC<DropdownProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleToggle = () => {
-    if (!disabled) {
-      setIsOpen(!isOpen);
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (disabled) return;
+
+    switch (event.key) {
+      case "Enter":
+      case " ":
+        if (!isOpen) {
+          setIsOpen(true);
+          setFocusedIndex(0);
+        } else if (focusedIndex >= 0) {
+          handleOptionClick(options[focusedIndex].value);
+        }
+        event.preventDefault();
+        break;
+      case "Escape":
+        setIsOpen(false);
+        break;
+      case "ArrowDown":
+        event.preventDefault();
+        if (!isOpen) {
+          setIsOpen(true);
+          setFocusedIndex(0);
+        } else {
+          setFocusedIndex((prev) => Math.min(prev + 1, options.length - 1));
+        }
+        break;
+      case "ArrowUp":
+        event.preventDefault();
+        if (isOpen) {
+          setFocusedIndex((prev) => Math.max(prev - 1, 0));
+        }
+        break;
+      case "Tab":
+        if (isOpen) {
+          setIsOpen(false);
+        }
+        break;
     }
   };
 
   const handleOptionClick = (optionValue: string) => {
     onChange(optionValue);
     setIsOpen(false);
+    setFocusedIndex(-1);
   };
 
-  return (
-    <>
-      <div
-        ref={dropdownRef}
-        className={`${styles.dropdownContainer} ${className}`}
-        >
-        {label && <label className={styles.label} htmlFor={id}>{label}</label>}
-        <button
-          role="button"
-          name={label}
-          type="button"
-          className={styles.dropdownButton}
-          onClick={handleToggle}
-          disabled={disabled}
-          aria-haspopup="listbox"
-          aria-expanded={isOpen}
-        >
-          <span>{selectedOption ? selectedOption.label : placeholder}</span>
-          <Image src={ChevronDown} alt="chevron-down" width={24} height={24} />
-        </button>
+  useEffect(() => {
+    if (isOpen && listRef.current && focusedIndex >= 0) {
+      const option = listRef.current.children[focusedIndex] as HTMLElement;
+      option.scrollIntoView({ block: "nearest" });
+    }
+  }, [focusedIndex, isOpen]);
 
-        {isOpen && (
-          <ul
-            className={styles.optionsList}
-            role="listbox"
-            aria-activedescendant={value.toString()}
-          >
-            {options.map((option) => (
-              <li
-                key={option.value}
-                className={`${styles.option} ${
-                  option.value === value ? styles.selected : ""
-                }`}
-                role="option"
-                aria-selected={option.value === value}
-                onClick={() => handleOptionClick(option.value)}
-              >
-                {option.label}
-              </li>
-            ))}
-          </ul>
+  return (
+    <div
+      ref={dropdownRef}
+      className={clsx(styles.dropdownContainer, className)}
+      onKeyDown={handleKeyDown}
+    >
+      {label && (
+        <label
+          id={labelId}
+          htmlFor={id}
+          className={clsx(styles.label, disabled && styles.labelDisabled)}
+        >
+          {label}
+        </label>
+      )}
+      <button
+        id={id}
+        type="button"
+        className={clsx(
+          styles.dropdownButton,
+          disabled && styles.dropdownDisabled
         )}
-      </div>
-    </>
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+        disabled={disabled}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        aria-labelledby={label ? labelId : undefined}
+        aria-describedby={id}
+        aria-controls={isOpen ? listId : undefined}
+      >
+        <span>{selectedOption ? selectedOption.label : placeholder}</span>
+        <Image
+          src={ChevronDown}
+          alt=""
+          width={24}
+          height={24}
+          aria-hidden="true"
+        />
+      </button>
+
+      {isOpen && (
+        <ul
+          id={listId}
+          ref={listRef}
+          className={styles.optionsList}
+          role="listbox"
+          aria-label={label || "Options"}
+          tabIndex={-1}
+        >
+          {options.map((option, index) => (
+            <li
+              key={option.value}
+              id={`${id}-option-${option.value}`}
+              className={clsx(
+                styles.option,
+                option.value === value && styles.selected,
+                index === focusedIndex && styles.focused
+              )}
+              role="option"
+              aria-selected={option.value === value}
+              onClick={() => handleOptionClick(option.value)}
+            >
+              {option.label}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };

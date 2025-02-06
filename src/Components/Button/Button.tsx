@@ -9,7 +9,10 @@ export const Button = ({
   variant: "primary" | "secondary";
   handleOnClick: () => void;
 }) => {
-
-    const buttonclasses = clsx(styles.button, styles[variant])
-  return <button className={buttonclasses} onClick={handleOnClick}>{label}</button>;
+  const buttonclasses = clsx(styles.button, styles[variant]);
+  return (
+    <button className={buttonclasses} onClick={handleOnClick}>
+      {label}
+    </button>
+  );
 };

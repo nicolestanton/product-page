@@ -1,8 +1,9 @@
 @use "../../styles/tokens/colours.scss" as *;
 @use "../../styles/tokens/typography.scss" as *;
+@use "../../styles/tokens/spacing.scss" as *;
 
 .header {
-  padding: 8px 16px;
+  padding: $spacing-4 $spacing-6;
   border-bottom: 1px solid $minimal-border-color;
 }
 
@@ -16,7 +17,7 @@
 
 .menuItems {
   display: flex;
-  gap: 16px;
+  gap: $spacing-6;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -26,6 +27,11 @@
   color: #333;
   text-decoration: none;
   font-weight: 500;
+  @include p2;
+}
+
+.menuItem:focus {
+  outline: 1px solid $focus-border-color;
 }
 
 .menuButton {
@@ -33,7 +39,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: $spacing-4;
 }
 
 .mobileMenu {
@@ -64,38 +70,35 @@
     background: #ffffff;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
-    padding: 2rem;
+    padding: $spacing-8;
   }
 
   .mobileMenu.open {
     transform: translateX(0);
+    z-index: 999;
   }
 
   .mobileMenuItems {
     list-style: none;
     padding: 0;
-    margin: 32px 0;
+    margin: $spacing-9 0;
   }
 
   .mobileMenuItem {
-    margin: 16px 0;
-    font-size: 1.2rem;
+    margin: $spacing-6 0;
+    font-size: $font-size-base;
   }
 
 }
 
 @media (min-width: 769px){
-  .menuItem{
-    @include p2;
-  }
-
   .headerIcons{
     display: flex;
-    gap: 16px;
+    gap: $spacing-6;
   }
-
+  
   .desktopMenuIcons{
     display: flex;
-    gap: 16px;
+    gap: $spacing-6;
   } 
 }

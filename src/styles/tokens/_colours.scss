@@ -1,10 +1,11 @@
 @use "./primitives.scss" as *;
 
-$test-color: pink;
 $primary-surface-color: $neutral-0;
 $secondary-surface-color: $cream-200;
 $invert-surface-color: $neutral-1000;
 $brand-surface-color: $purple-50;
+$disabled-surface-color: $black-6;
+
 
 $primary-text-color: $neutral-1000;
 $secondary-text-color: $neutral-700;
@@ -17,3 +18,5 @@ $primary-border-color: $neutral-1000;
 $secondary-border-color: $black-30;
 $minimal-border-color: $black-15;
 $invert-border-color: $neutral-0;
+
+$focus-border-color: $focus-blue;

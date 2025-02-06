@@ -27,6 +27,6 @@
   }
 
   &:focus {
-    outline: 1px solid blue($color: #000000);
+    outline: 1px solid $focus-border-color;
   }
 }

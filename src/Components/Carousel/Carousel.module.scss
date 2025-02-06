@@ -1,7 +1,11 @@
+@use "../../styles/tokens/colours.scss" as *;
+@use "../../styles/tokens/radius.scss" as *;
+@use "../../styles/tokens/spacing.scss" as *;
+
 .carousel {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: $spacing-6;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
@@ -25,13 +29,13 @@
 
 .thumbnails {
   display: flex;
-  gap: 0.5rem;
+  gap: $spacing-4;
   width: 100%;
 }
 
 .thumbnail {
   position: relative;
-  border-radius: 6px;
+  border-radius: $border-radius-small;
   flex: 0 0 80px;
   width: 80px;
   height: 80px;
@@ -42,11 +46,14 @@
   background: none;
 }
 
+.thumbnail:focus {
+  outline: 1px solid $focus-border-color;
+}
+
 .thumbnailImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 6px;
 }
 
 /* Desktop styles */
@@ -54,6 +61,10 @@
   .thumbnails {
     flex-wrap: wrap;
     justify-content: flex-start;
+  }
+
+  .thumbnailImage {
+    border-radius: $border-radius-small;
   }
 }
 
@@ -108,7 +119,7 @@
   }
 
   .mainImage img {
-    border-radius: 12px;
+    border-radius: $border-radius-large;
   }
 
   .thumbnailContainer {
@@ -120,9 +131,9 @@
   }
 
   .thumbnail {
-    border-radius: 6px;
+    border-radius: $border-radius-small;
   }
   .thumbnail.active {
-    border: 1px solid #000;
+    border: 1px solid $primary-border-color;
   }
 }
